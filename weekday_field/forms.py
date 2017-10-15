@@ -1,13 +1,13 @@
 from django import forms
 from django.forms.widgets import CheckboxSelectMultiple
 
-import utils
+from .utils import DAY_CHOICES, BITWISE_DAY_CHOICES
 import operator
 
 class WeekdayFormField(forms.TypedMultipleChoiceField):
     def __init__(self, *args, **kwargs):
         if 'choices' not in kwargs:
-          kwargs['choices'] = utils.DAY_CHOICES
+          kwargs['choices'] = DAY_CHOICES
         kwargs.pop('max_length', None)
         if 'widget' not in kwargs:
           kwargs['widget'] = forms.widgets.SelectMultiple
@@ -21,10 +21,10 @@ class BitwiseWeekdayFormField(WeekdayFormField):
   def __init__(self, *args, **kwargs):
     if 'short' in kwargs:
       if kwargs['short']:
-        kwargs['choices'] = [(x[0],x[1]) for x in utils.BITWISE_DAY_CHOICES]
+        kwargs['choices'] = [(x[0],x[1]) for x in BITWISE_DAY_CHOICES]
       del kwargs['short']
     else:
-      kwargs['choices'] = [(x[0],x[2]) for x in utils.BITWISE_DAY_CHOICES]
+      kwargs['choices'] = [(x[0],x[2]) for x in BITWISE_DAY_CHOICES]
     super(BitwiseWeekdayFormField, self).__init__(*args, **kwargs)
 
   def clean(self,value):

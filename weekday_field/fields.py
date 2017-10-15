@@ -1,20 +1,19 @@
 from django.db import models
+from django.core.validators import validate_comma_separated_integer_list
 
-from forms import WeekdayFormField
+from .forms import WeekdayFormField
 
 def validate_csv(data):
     return all(map(lambda x:isinstance(x, int), data))
     
-class WeekdayField(models.CommaSeparatedIntegerField):
+class WeekdayField(models.CharField):
     """
     Field to simplify the handling of a multiple choice of None->all days.
     
     Stores as CSInt.
     """
-    __metaclass__ = models.SubfieldBase
-    
     description = "CSV Weekday Field"
-    default_validators = [validate_csv]
+    default_validators = [validate_csv, validate_comma_separated_integer_list]
     
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = 14
@@ -39,8 +38,6 @@ def validate_bitwise_notation(data):
   return data > 0 and data <= (2**7 - 1)
 
 class BitwiseWeekdayField(models.IntegerField):
-  __metaclass__ = models.SubfieldBase
-  
   description = "Bitwise Weekday Field"
   default_validators = [validate_bitwise_notation]
 
