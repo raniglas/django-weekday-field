@@ -26,7 +26,11 @@ class WeekdayField(models.CharField):
         return ",".join([str(x) for x in value])
 
     def to_python(self, value):
-        if isinstance(value, basestring):
+        try:
+            basestring
+        except NameError:
+            basestring = str
+        if isinstance(value, str):
             if value:
                 value = [int(x) for x in value.strip('[]').split(',') if x]
             else:
