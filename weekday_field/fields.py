@@ -13,7 +13,7 @@ class WeekdayField(models.CharField):
     Stores as CSInt.
     """
     description = "CSV Weekday Field"
-    default_validators = [validate_csv, validate_comma_separated_integer_list]
+    default_validators = [validate_csv]
     
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = 14
