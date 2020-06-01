@@ -22,7 +22,7 @@ class WeekdayField(models.CharField):
     def formfield(self, **kwargs):
         return super(WeekdayField, self).formfield(form_class=WeekdayFormField, **kwargs)
     
-        def from_db_value(self, value, expression, connection, context):
+    def from_db_value(self, value, expression, connection, context):
         try:
             basestring
         except NameError:
