@@ -22,6 +22,20 @@ class WeekdayField(models.CharField):
     def formfield(self, **kwargs):
         return super(WeekdayField, self).formfield(form_class=WeekdayFormField, **kwargs)
     
+        def from_db_value(self, value, expression, connection, context):
+        try:
+            basestring
+        except NameError:
+            basestring = str
+
+        if isinstance(value, str):
+            if value:
+                value = [int(x) for x in value.strip('[]').split(',') if x]
+            else:
+                value = []
+
+        return value
+    
     def get_db_prep_value(self, value, connection=None, prepared=False):
         return ",".join([str(x) for x in value])
 
