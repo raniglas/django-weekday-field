@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import validate_comma_separated_integer_list
 
-from .forms import WeekdayFormField
+from .forms import WeekdayFormField, BitwiseWeekdayFormField
 
 def validate_csv(data):
     return all(map(lambda x:isinstance(x, int), data))
